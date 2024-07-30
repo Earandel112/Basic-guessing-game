@@ -1,0 +1,42 @@
+import random
+
+class NumberGuessingGame:
+    def __init__(self, min_num=1, max_num=100, max_attempts=10):
+        self.min_num = min_num
+        self.max_num = max_num
+        self.max_attempts = max_attempts
+        self.target_number = random.randint(min_num, max_num)
+        self.attempts = 0
+
+    def play(self):
+        print(f"Guess a number between {self.min_num} and {self.max_num}.")
+        
+        while self.attempts < self.max_attempts:
+            guess = self.get_valid_guess()
+            self.attempts += 1
+
+            if guess == self.target_number:
+                print(f"Congratulations! You guessed the number in {self.attempts} attempts.")
+                return True
+            elif guess < self.target_number:
+                print("Too low. Try again.")
+            else:
+                print("Too high. Try again.")
+
+        print(f"Sorry, you've run out of attempts. The number was {self.target_number}.")
+        return False
+
+    def get_valid_guess(self):
+        while True:
+            try:
+                guess = int(input(f"Enter your guess (Attempt {self.attempts + 1}/{self.max_attempts}): "))
+                if self.min_num <= guess <= self.max_num:
+                    return guess
+                else:
+                    print(f"Please enter a number between {self.min_num} and {self.max_num}.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+if __name__ == "__main__":
+    game = NumberGuessingGame()
+    game.play()
